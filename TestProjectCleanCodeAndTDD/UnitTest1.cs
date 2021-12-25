@@ -7,7 +7,7 @@ namespace TestProjectCleanCodeAndTDD
         [Fact]
         public void Test1()
         {
-
+            
         }
     }
 }
