@@ -8,9 +8,9 @@ namespace TestProjectCleanCodeAndTDD
         [Fact]
         public void Should_Return_Zero_When_Empty_Input()
         {
-            var result = StringCalculator.Add("");
+            var result = StringCalculator.Add("1");
 
-            Assert.Equal(0, result);
+            Assert.Equal(1, result);
 
 
             
