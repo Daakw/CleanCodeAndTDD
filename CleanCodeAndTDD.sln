@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanCodeAndTDD", "CleanCodeAndTDD\CleanCodeAndTDD.csproj", "{72D8D8EC-0B21-4288-8736-1626EAECB4FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjectCleanCodeAndTDD", "TestProjectCleanCodeAndTDD\TestProjectCleanCodeAndTDD.csproj", "{04DA1960-9BEF-486C-A733-90E19C9303DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72D8D8EC-0B21-4288-8736-1626EAECB4FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72D8D8EC-0B21-4288-8736-1626EAECB4FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72D8D8EC-0B21-4288-8736-1626EAECB4FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72D8D8EC-0B21-4288-8736-1626EAECB4FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04DA1960-9BEF-486C-A733-90E19C9303DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04DA1960-9BEF-486C-A733-90E19C9303DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04DA1960-9BEF-486C-A733-90E19C9303DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04DA1960-9BEF-486C-A733-90E19C9303DF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F4CA37C5-8E7B-40B3-B7B1-AD83B70F20C0}
+	EndGlobalSection
+EndGlobal
