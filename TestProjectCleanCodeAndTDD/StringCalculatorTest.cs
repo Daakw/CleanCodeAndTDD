@@ -8,7 +8,7 @@ namespace TestProjectCleanCodeAndTDD
         [Fact]
         public void Should_Return_Zero_When_Empty_Input()
         {
-            var result = StringCalculator.Add("0");
+            var result = StringCalculator.Add("");
 
             Assert.Equal(0, result);
             
@@ -24,7 +24,7 @@ namespace TestProjectCleanCodeAndTDD
         }
 
         [Fact]
-        public void Should_Return_Sum_Of_Two_If_Input_Is_Two()
+        public void Should_Return_Sum_Of_Two_Numbers_If_Input_Is_Two()
         {
             var result = StringCalculator.Add("3,5");
 
@@ -32,6 +32,14 @@ namespace TestProjectCleanCodeAndTDD
 
         }
 
+        [Fact]
+        public void Should_Return_Sum_Of_Multiple_Numbers_If_Input_Is_Multiple()
+        {
+            var result = StringCalculator.Add("3, 5, 2, 5, 15");
+
+            Assert.Equal(30, result);
+
+        }
 
 
     }
