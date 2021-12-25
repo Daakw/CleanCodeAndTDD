@@ -24,7 +24,7 @@ namespace TestProjectCleanCodeAndTDD
         }
 
         [Fact]
-        public void Should_Return_Sum_Of_Two_Numbers_If_Input_Is_Two()
+        public void Should_Return_Sum_Of_Two_Numbers_When_Separated_By_Comma()
         {
             var result = StringCalculator.Add("3,5");
 
@@ -33,11 +33,20 @@ namespace TestProjectCleanCodeAndTDD
         }
 
         [Fact]
-        public void Should_Return_Sum_Of_Multiple_Numbers_If_Input_Is_Multiple()
+        public void Should_Return_Sum_Of_Multiple_Numbers_Seperated_By_Comma_If_Input_Is_Multiple()
         {
             var result = StringCalculator.Add("3, 5, 2, 5, 15");
 
             Assert.Equal(30, result);
+
+        }
+
+        [Fact]
+        public void Should_Return_Sum_If_Numbers_Are_Separated_With_New_Line()
+        {
+            var result = StringCalculator.Add("3,5\n7,5\n4\n10");
+
+            Assert.Equal(34, result);
 
         }
 

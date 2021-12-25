@@ -16,9 +16,11 @@ namespace CleanCodeAndTDD
             {
                 return 0;
             }
-            else if (numbers.Contains(','))
+            else if (numbers.Contains(',') || numbers.Contains('\n'))
             {
-                var stringArray = numbers.Split(",");
+                var seperators = new string[] {",", "\n"};
+                var stringArray = numbers.Split(seperators, StringSplitOptions.None);
+
                 return stringArray.Select(x => int.Parse(x)).Sum();
             }
             else
