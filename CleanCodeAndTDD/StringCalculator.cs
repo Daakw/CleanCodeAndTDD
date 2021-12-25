@@ -10,6 +10,10 @@ namespace CleanCodeAndTDD
 {
     public class StringCalculator
     {
+        internal static int Add(string numbers)
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }
