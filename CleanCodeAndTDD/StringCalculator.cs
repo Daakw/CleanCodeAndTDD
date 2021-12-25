@@ -12,12 +12,20 @@ namespace CleanCodeAndTDD
     {
         internal static int Add(string numbers)
         {
-            if(numbers == "")
+            if (numbers == "")
             {
                 return 0;
             }
-
-            return int.Parse(numbers);
+            else if (numbers.Contains(','))
+            {
+                var stringArray = numbers.Split(",");
+                return stringArray.Select(x => int.Parse(x)).Sum();
+            }
+            else
+            {
+                return int.Parse(numbers);
+            }
+            
         }
 
     }
