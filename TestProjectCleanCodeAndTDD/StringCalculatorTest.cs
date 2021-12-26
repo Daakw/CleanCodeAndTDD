@@ -1,4 +1,5 @@
 using CleanCodeAndTDD;
+using System;
 using Xunit;
 
 namespace TestProjectCleanCodeAndTDD
@@ -8,7 +9,8 @@ namespace TestProjectCleanCodeAndTDD
         [Fact]
         public void Add_Should_Return_Zero_When_Empty_Input()
         {
-            var result = StringCalculator.Add("");
+            var stringCalculator = new StringCalculator();
+            var result = stringCalculator.Add("");
 
             Assert.Equal(0, result);
             
@@ -17,7 +19,8 @@ namespace TestProjectCleanCodeAndTDD
         [Fact]
         public void Add_Should_Return_Sum_Of_One_If_Input_Is_One()
         {
-            var result = StringCalculator.Add("1");
+            var stringCalculator = new StringCalculator();
+            var result = stringCalculator.Add("1");
 
             Assert.Equal(1, result);
 
@@ -26,7 +29,8 @@ namespace TestProjectCleanCodeAndTDD
         [Fact]
         public void Add_Should_Return_Sum_Of_Two_Numbers_When_Separated_By_Comma()
         {
-            var result = StringCalculator.Add("3,5");
+            var stringCalculator = new StringCalculator();
+            var result = stringCalculator.Add("3,5");
 
             Assert.Equal(8, result);
 
@@ -35,7 +39,8 @@ namespace TestProjectCleanCodeAndTDD
         [Fact]
         public void Add_Should_Return_Sum_Of_Multiple_Numbers_Seperated_By_Comma_If_Input_Is_Multiple()
         {
-            var result = StringCalculator.Add("3, 5, 2, 5, 15");
+            var stringCalculator = new StringCalculator();
+            var result = stringCalculator.Add("3, 5, 2, 5, 15");
 
             Assert.Equal(30, result);
 
@@ -44,7 +49,8 @@ namespace TestProjectCleanCodeAndTDD
         [Fact]
         public void Add_Should_Return_Sum_If_Numbers_Are_Separated_With_New_Line()
         {
-            var result = StringCalculator.Add("3,5\n7,5\n4\n10");
+            var stringCalculator = new StringCalculator();
+            var result = stringCalculator.Add("3,5\n7,5\n4\n10");
 
             Assert.Equal(34, result);
 
@@ -53,11 +59,40 @@ namespace TestProjectCleanCodeAndTDD
         [Fact]
         public void Add_Should_support_Delimiter_declarations()
         {
-            var result = StringCalculator.Add("//;\n1;2");
+            var stringCalculator = new StringCalculator();
+            var result = stringCalculator.Add("//;\n1;2");
 
             Assert.Equal(3, result);
 
         }
 
+        [Fact]
+        public void Add_Should_Not_Support_Negative_Number_And_Throw_Exception()
+        {
+            var stringCalculator = new StringCalculator();
+
+            var ae = Assert.Throws<ArgumentException>(() => stringCalculator.Add("-2,3"));
+        }
+
+        [Fact]
+        public void Add_Should_Not_Support_Negative_Number_And_Throw_Exception_And_Display_The_Number()
+        {
+            var stringCalculator = new StringCalculator();
+
+            var ae = Assert.Throws<ArgumentException>(() => stringCalculator.Add("-5,3"));
+
+            Assert.Equal("Negative numbers not allowed: -5", ae.Message);
+
+        }
+
+        [Fact]
+        public void Add_Should_Not_Support_Multiple_Negative_Numbers_And_Throw_Exception_And_Display_The_Numbers()
+        {
+            var stringCalculator = new StringCalculator();
+            var ae = Assert.Throws<ArgumentException>(() => stringCalculator.Add("-5,3,6,-9,-3"));
+
+            Assert.Equal("Negative numbers not allowed: -5, -9, -3", ae.Message);
+
+        }
     }
 }

@@ -8,37 +8,64 @@ using System.Threading.Tasks;
 [assembly: InternalsVisibleTo("TestProjectCleanCodeAndTDD")]
 namespace CleanCodeAndTDD
 {
-    public static class StringCalculator
+    public class StringCalculator
     {
-        public static int Add(string numbers)
+        public int Add(string numbers)
         {
             if (numbers == "")
             {
                 return 0;
             }
-            else if ((HasDelimiter(numbers)))
+            else if (HasDelimiter(numbers))
             {
                 string[] stringArray;
 
                 if (HasDelimiterDeclaration(numbers))
                 {
                     char delimiter = numbers.Skip(2).Take(1).First();
-                    string? cleanedString = numbers.Substring(3);
-                    stringArray = cleanedString.Split(delimiter);
 
-                    return stringArray.Select(s => int.Parse(s)).Sum();
+                    stringArray = FindStringArray(numbers, delimiter);
+                    return SumOfNumbers(stringArray);
                 }
 
                 var separators = new string[] { ",", "\n" };
                 stringArray = numbers.Split(separators, StringSplitOptions.None);
 
-                return stringArray.Select(x => int.Parse(x)).Sum();
+                return SumOfNumbers(stringArray);
             }
             else
             {
                 return int.Parse(numbers);
             }
 
+        }
+
+        private static int SumOfNumbers(string[] stringArray)
+        {
+            var numberArray = stringArray.Select(str => int.Parse(str));
+            if (HasNegatives(numberArray))
+            {
+                throw new ArgumentException($"Negative numbers not allowed: {ListNegatives(numberArray)}");
+            }
+            return stringArray.Select(str => int.Parse(str)).Sum();
+        }
+
+        private static string ListNegatives(IEnumerable<int> numberArray)
+        {
+            return string.Join(", ", numberArray.Where(n => n < 0));
+        }
+
+        private static bool HasNegatives(IEnumerable<int> numberArray)
+        {
+            return numberArray.Any(num => num < 0);
+        }
+
+        private static string[] FindStringArray(string numbers, char delimiter)
+        {
+            string[] stringArray;
+            string? cleanedString = numbers.Substring(3);
+            stringArray = cleanedString.Split(delimiter);
+            return stringArray;
         }
 
         private static bool HasDelimiter(string numbers)
