@@ -94,5 +94,25 @@ namespace TestProjectCleanCodeAndTDD
             Assert.Equal("Negative numbers not allowed: -5, -9, -3", ae.Message);
 
         }
+
+        [Fact]
+        public void Add_Should_Ignore_Number_Over_1000()
+        {
+            var stringCalculator = new StringCalculator();
+            var result = stringCalculator.Add("2,1001");
+
+            Assert.Equal(2, result);
+            
+        }
+
+        [Fact]
+        public void Add_Should_Ignore_Multiple_Numbers_Over_1000()
+        {
+            var stringCalculator = new StringCalculator();
+            var result = stringCalculator.Add("2,1001,7,1002,1003");
+
+            Assert.Equal(9, result);
+
+        }
     }
 }

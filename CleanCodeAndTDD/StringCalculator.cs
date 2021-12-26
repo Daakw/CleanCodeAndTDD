@@ -43,11 +43,23 @@ namespace CleanCodeAndTDD
         private static int SumOfNumbers(string[] stringArray)
         {
             var numberArray = stringArray.Select(str => int.Parse(str));
+
             if (HasNegatives(numberArray))
             {
                 throw new ArgumentException($"Negative numbers not allowed: {ListNegatives(numberArray)}");
             }
-            return stringArray.Select(str => int.Parse(str)).Sum();
+            
+            if (HasNumbersGreaterThan1000(numberArray))
+            {
+                numberArray = numberArray.Where(n => n <= 1000);
+            }
+
+            return numberArray.Sum();
+        }
+
+        private static bool HasNumbersGreaterThan1000(IEnumerable<int> numberArray)
+        {
+            return numberArray.Any(num => num > 1000);
         }
 
         private static string ListNegatives(IEnumerable<int> numberArray)
