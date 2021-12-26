@@ -70,7 +70,6 @@ namespace TestProjectCleanCodeAndTDD
         public void Add_Should_Not_Support_Negative_Number_And_Throw_Exception()
         {
             var stringCalculator = new StringCalculator();
-
             var ae = Assert.Throws<ArgumentException>(() => stringCalculator.Add("-2,3"));
         }
 
@@ -78,7 +77,6 @@ namespace TestProjectCleanCodeAndTDD
         public void Add_Should_Not_Support_Negative_Number_And_Throw_Exception_And_Display_The_Number()
         {
             var stringCalculator = new StringCalculator();
-
             var ae = Assert.Throws<ArgumentException>(() => stringCalculator.Add("-5,3"));
 
             Assert.Equal("Negative numbers not allowed: -5", ae.Message);
@@ -113,6 +111,15 @@ namespace TestProjectCleanCodeAndTDD
 
             Assert.Equal(9, result);
 
+        }
+
+        [Fact]
+        public void Add_Should_Include_Delimiters_Of_Any_Length()
+        {
+            var stringCalculator = new StringCalculator();
+            var result = stringCalculator.Add("//[***]\n1***2***3");
+
+            Assert.Equal(6, result);
         }
     }
 }
