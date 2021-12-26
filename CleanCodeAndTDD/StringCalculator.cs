@@ -8,18 +8,29 @@ using System.Threading.Tasks;
 [assembly: InternalsVisibleTo("TestProjectCleanCodeAndTDD")]
 namespace CleanCodeAndTDD
 {
-    public class StringCalculator
+    public static class StringCalculator
     {
-        internal static int Add(string numbers)
+        public static int Add(string numbers)
         {
             if (numbers == "")
             {
                 return 0;
             }
-            else if (numbers.Contains(',') || numbers.Contains('\n'))
+            else if ((HasDelimiter(numbers)))
             {
-                var seperators = new string[] {",", "\n"};
-                var stringArray = numbers.Split(seperators, StringSplitOptions.None);
+                string[] stringArray;
+
+                if (HasDelimiterDeclaration(numbers))
+                {
+                    char delimiter = numbers.Skip(2).Take(1).First();
+                    string? cleanedString = numbers.Substring(3);
+                    stringArray = cleanedString.Split(delimiter);
+
+                    return stringArray.Select(s => int.Parse(s)).Sum();
+                }
+
+                var separators = new string[] { ",", "\n" };
+                stringArray = numbers.Split(separators, StringSplitOptions.None);
 
                 return stringArray.Select(x => int.Parse(x)).Sum();
             }
@@ -27,7 +38,17 @@ namespace CleanCodeAndTDD
             {
                 return int.Parse(numbers);
             }
-            
+
+        }
+
+        private static bool HasDelimiter(string numbers)
+        {
+            return numbers.Contains(',') || numbers.Contains('\n');
+        }
+
+        private static bool HasDelimiterDeclaration(string numbers)
+        {
+            return numbers.Contains("//") && numbers.Contains("\n");
         }
 
     }

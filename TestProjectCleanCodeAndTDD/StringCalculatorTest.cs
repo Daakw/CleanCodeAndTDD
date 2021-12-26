@@ -6,7 +6,7 @@ namespace TestProjectCleanCodeAndTDD
     public class StringCalculatorTest
     {
         [Fact]
-        public void Should_Return_Zero_When_Empty_Input()
+        public void Add_Should_Return_Zero_When_Empty_Input()
         {
             var result = StringCalculator.Add("");
 
@@ -15,7 +15,7 @@ namespace TestProjectCleanCodeAndTDD
         }
 
         [Fact]
-        public void Should_Return_Sum_Of_One_If_Input_Is_One()
+        public void Add_Should_Return_Sum_Of_One_If_Input_Is_One()
         {
             var result = StringCalculator.Add("1");
 
@@ -24,7 +24,7 @@ namespace TestProjectCleanCodeAndTDD
         }
 
         [Fact]
-        public void Should_Return_Sum_Of_Two_Numbers_When_Separated_By_Comma()
+        public void Add_Should_Return_Sum_Of_Two_Numbers_When_Separated_By_Comma()
         {
             var result = StringCalculator.Add("3,5");
 
@@ -33,7 +33,7 @@ namespace TestProjectCleanCodeAndTDD
         }
 
         [Fact]
-        public void Should_Return_Sum_Of_Multiple_Numbers_Seperated_By_Comma_If_Input_Is_Multiple()
+        public void Add_Should_Return_Sum_Of_Multiple_Numbers_Seperated_By_Comma_If_Input_Is_Multiple()
         {
             var result = StringCalculator.Add("3, 5, 2, 5, 15");
 
@@ -42,7 +42,7 @@ namespace TestProjectCleanCodeAndTDD
         }
 
         [Fact]
-        public void Should_Return_Sum_If_Numbers_Are_Separated_With_New_Line()
+        public void Add_Should_Return_Sum_If_Numbers_Are_Separated_With_New_Line()
         {
             var result = StringCalculator.Add("3,5\n7,5\n4\n10");
 
@@ -50,6 +50,14 @@ namespace TestProjectCleanCodeAndTDD
 
         }
 
+        [Fact]
+        public void Add_Should_support_Delimiter_declarations()
+        {
+            var result = StringCalculator.Add("//;\n1;2");
+
+            Assert.Equal(3, result);
+
+        }
 
     }
 }
