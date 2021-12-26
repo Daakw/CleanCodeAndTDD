@@ -10,103 +10,88 @@ namespace CleanCodeAndTDD
 {
     public class StringCalculator
     {
-        public int Add(string numbers)
+        public static int Add(string numbers)
         {
-            if (numbers == "")
-            {
+
+            if (string.IsNullOrEmpty(numbers)) {
                 return 0;
             }
-            else if (HasDelimiter(numbers))
-            {
-                string[] stringArray;
-
-                if (HasDelimiterDeclaration(numbers))
-                {
-                    if (IsDelimiterString(numbers))
-                    {
-                        var delimiterStartIndex = 3;
-                        var delimiterEndIndex = numbers.IndexOf("]\n");
-                        var delimiterLenght = delimiterEndIndex - delimiterStartIndex;
-                        var delimiterString = numbers.Substring(delimiterStartIndex, delimiterLenght);
-
-                        stringArray = FindStringArray(numbers, new string[] { delimiterString });
-
-                        return SumOfNumbers(stringArray);
-                    }
-
-                    char delimiter = numbers.Skip(2).Take(1).First();
-
-                    stringArray = FindStringArray(numbers, new string[] { delimiter.ToString() });
-                    return SumOfNumbers(stringArray);
-                }
-
-                var separators = new string[] { ",", "\n" };
-                stringArray = numbers.Split(separators, StringSplitOptions.None);
-
-                return SumOfNumbers(stringArray);
+    
+            if (HasMultipleDelimiters(numbers)) {
+                return MultipleDelimiters(numbers);
             }
-            else
-            {
-                return int.Parse(numbers);
-            }
-        }
-
-        private static bool IsDelimiterString(string numbers)
-        {
-            return numbers.StartsWith("//[") && numbers.Contains("]\n");
-        }
-
-        private static int SumOfNumbers(string[] stringArray)
-        {
-            var numberArray = stringArray.Select(str => int.Parse(str));
-
-            if (HasNegatives(numberArray))
-            {
-                throw new ArgumentException($"Negative numbers not allowed: {ListNegatives(numberArray)}");
-            }
-            
-            if (HasNumbersGreaterThan1000(numberArray))
-            {
-                numberArray = numberArray.Where(n => n <= 1000);
+                
+            if (HasDelimiter(numbers)) { 
+                return SingleDelimiter(numbers);
             }
 
-            return numberArray.Sum();
+            return DefaultDelimiters(numbers);
         }
 
-        private static bool HasNumbersGreaterThan1000(IEnumerable<int> numberArray)
+        private static int DefaultDelimiters(string numbers)
         {
-            return numberArray.Any(num => num > 1000);
+            return NumbersFromString(NumberSplit(numbers, new string[] { "\n", "," }));
         }
 
-        private static string ListNegatives(IEnumerable<int> numberArray)
+        private static bool HasDelimiter(string delimiter)
         {
-            return string.Join(", ", numberArray.Where(n => n < 0));
+            return delimiter.StartsWith("//");
         }
 
-        private static bool HasNegatives(IEnumerable<int> numberArray)
+        private static bool HasMultipleDelimiters(string delimiters)
         {
-            return numberArray.Any(num => num < 0);
+            return delimiters.Contains(']') && delimiters.Contains('[');
         }
 
-        private static string[] FindStringArray(string numbers, string[] delimiter)
+        private static string[] NumberSplit(string numbers, string[] delimiters)
         {
-            string[] stringArray;
-            var startIndexOfString = numbers.IndexOf("\n");
-            string? cleanedString = numbers.Substring(startIndexOfString + 1);
-            stringArray = cleanedString.Split(delimiter, StringSplitOptions.None);
-
-            return stringArray;
+            return numbers.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        private static bool HasDelimiter(string numbers)
+        private static void ThrowExceptionIfNegativeNumber(IEnumerable<int> numberArray)
         {
-            return numbers.Contains(',') || numbers.Contains('\n');
+            var negativeNumbers = numberArray.Where(number => number < 0);
+            if (negativeNumbers.Any())
+            {
+                string negativeString = String.Join(',', negativeNumbers
+                .Select(n => n.ToString()));
+
+                throw new ArgumentException($"Negative numbers not allowed: {negativeString}");
+            }
         }
 
-        private static bool HasDelimiterDeclaration(string numbers)
+        private static int SingleDelimiter(string numbers)
         {
-            return numbers.Contains("//") && numbers.Contains("\n");
+            var delimiter = numbers.Skip(2).Take(1).Select(c => c.ToString()).ToArray();
+            string stringWithoutDelimiter = numbers[(numbers.IndexOf('\n') + 1)..];
+           
+            return NumbersFromString(NumberSplit(stringWithoutDelimiter, delimiter));
         }
 
+        private static int MultipleDelimiters(string numbers)
+        {
+            var beginningString = numbers.Substring(2, (numbers.IndexOf("]\n") + 1) - 3);
+            string firstNumberInString = numbers.Substring(numbers.IndexOf("]\n") + 1);
+            var multipleDelimiters = beginningString.Split(new string[] { "[", "]" }, StringSplitOptions.RemoveEmptyEntries);
+
+            return NumbersFromString(NumberSplit(firstNumberInString, multipleDelimiters));
+        }
+
+        private static int NumbersFromString(string[] numbersArray)
+        {
+            var numbers = numbersArray.Select(theString => int.Parse(theString));
+            ThrowExceptionIfNegativeNumber(numbers);
+
+            if (IfNumberIsBiggerThan1000(numbers))
+            {
+                numbers = numbers.Where(n => n <= 1000);
+            }
+            return numbers.Sum();
+        }
+
+        private static bool IfNumberIsBiggerThan1000(IEnumerable<int> numbers)
+        {
+            return numbers.Any(num => num > 1000);
+        }
     }
 }
